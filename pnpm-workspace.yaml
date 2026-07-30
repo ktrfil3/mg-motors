@@ -1,0 +1,19 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Permite que pacotes essenciais executem seus scripts de build (pnpm v10+)
+# Necessário para: Prisma (geração de cliente), NestJS (metadados), esbuild (compilação Next.js)
+allowedDeprecatedVersions:
+  glob: "*"
+  inflight: "*"
+
+allowBuilds:
+  "@nestjs/core": true
+  "@prisma/client": true
+  "@prisma/engines": true
+  "prisma": true
+  "esbuild": true
+  "@swc/core": true
+  "sharp": true
+  "better-sqlite3": true
