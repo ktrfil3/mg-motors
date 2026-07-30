@@ -110,9 +110,9 @@ export function calcularSAC(
 // para conformidade com transparência ao consumidor (CDC art. 52)
 
 function calcularCET(
-  principal: number,
-  avgMonthlyPayment: number,
-  termMonths: number,
+  _principal: number,
+  _avgMonthlyPayment: number,
+  _termMonths: number,
   monthlyRate: number,
 ): number {
   // Estimativa: taxa nominal anual composta

@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsEnum, IsBoolean, IsOptional, IsUrl, Min } from 'class-validator'
+import { IsString, IsNumber, IsEnum, IsBoolean, IsOptional, Min } from 'class-validator'
 import { Type } from 'class-transformer'
 import { VehicleCategory, FuelType, TransmissionType } from '@prisma/client'
 

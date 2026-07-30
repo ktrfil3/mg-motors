@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../../common/prisma/prisma.service'
-import { IsString, IsBoolean, IsOptional, IsNumber, IsEnum, Min } from 'class-validator'
+import { IsString, IsBoolean, IsOptional, IsNumber, Min } from 'class-validator'
 import { Type } from 'class-transformer'
 
 export class QueryOffersDto {
