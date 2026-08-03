@@ -1,12 +1,6 @@
-const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Trata dependências no monorepo para serveless do Vercel
-  experimental: {
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-  },
-
   // Transpila os pacotes do monorepo
   transpilePackages: ['@troller/ui', '@troller/config'],
 
@@ -20,7 +14,7 @@ const nextConfig = {
 
   // Variáveis de ambiente expostas ao cliente
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '',
   },
 
   // Headers de segurança
