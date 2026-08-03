@@ -3,6 +3,7 @@ import './globals.css'
 import { TestDriveModalGlobal } from '@/components/testdrive/TestDriveModalGlobal'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.mgmotorsvenezuela.com'),
   title: {
     default: 'MG Motors Venezuela — Maneja el Futuro',
     template: '%s | MG Motors Venezuela',

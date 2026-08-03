@@ -1,5 +1,12 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Trata dependências no monorepo para serveless do Vercel
+  experimental: {
+    outputFileTracingRoot: path.join(__dirname, '../../'),
+  },
+
   // Transpila os pacotes do monorepo
   transpilePackages: ['@troller/ui', '@troller/config'],
 
