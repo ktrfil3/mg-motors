@@ -57,6 +57,7 @@ const fallbackVehicles = [
   {
     id: '0', slug: 'cyberster', name: 'MG Cyberster', tagline: 'Roadster eléctrico 335 HP · 490 km',
     category: 'OFFROAD', basePrice: 89990, heroImage: '/assets/models/cyberster/hero.png', isFeatured: true,
+    model3dUrl: '/assets/models/cyberster/m_cyberster.glb'
   },
   {
     id: '1', slug: 'zs', name: 'MG ZS', tagline: 'El SUV compacto más popular',
