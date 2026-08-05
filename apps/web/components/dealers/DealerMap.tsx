@@ -6,6 +6,8 @@ import { MapPin, Phone, Clock } from 'lucide-react'
 // ─── DealerMap com Leaflet ────────────────────────────────────────────────────
 // Importado dinamicamente (ssr: false) para evitar erro de window undefined
 
+import { dealersData } from '@/data/dealers'
+
 interface Dealer {
   id: string
   name: string
@@ -20,11 +22,8 @@ interface Dealer {
   hasService: boolean
 }
 
-interface DealerMapProps {
-  dealers: Dealer[]
-}
-
-export function DealerMap({ dealers }: DealerMapProps) {
+export function DealerMap() {
+  const dealers = dealersData;
   const [selectedDealer, setSelectedDealer] = useState<Dealer | null>(dealers[0] || null)
   const [MapComponents, setMapComponents] = useState<any>(null)
 
@@ -59,21 +58,21 @@ export function DealerMap({ dealers }: DealerMapProps) {
     })
   }, [])
 
-  const center: [number, number] = [-15.7801, -47.9292] // Brasília (centro do Brasil)
+  const center: [number, number] = [8.0, -66.0] // Centro aproximado de Venezuela
 
   if (dealers.length === 0) {
     return (
       <div className="text-center py-20 text-brand-subtle">
         <MapPin size={48} className="mx-auto mb-4 opacity-30" />
-        <p>Nenhuma concessionária encontrada.</p>
+        <p>No se encontraron concesionarios.</p>
       </div>
     )
   }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {/* ─── Lista de concessionárias ─────────────────────────────── */}
-      <div className="lg:col-span-1 flex flex-col gap-3 max-h-[600px] overflow-y-auto pr-2">
+      {/* ─── Lista de concesionarios ─────────────────────────────── */}
+      <div className="lg:col-span-1 flex flex-col gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
         {dealers.map((dealer) => (
           <button
             key={dealer.id}
@@ -99,10 +98,10 @@ export function DealerMap({ dealers }: DealerMapProps) {
             </div>
             <div className="flex items-center gap-3 mt-2">
               {dealer.hasSales && (
-                <span className="text-xs bg-brand-mid/30 text-brand-light px-2 py-0.5 rounded">Vendas</span>
+                <span className="text-xs bg-brand-mid/30 text-brand-light px-2 py-0.5 rounded border border-brand-mid/50">Ventas</span>
               )}
               {dealer.hasService && (
-                <span className="text-xs bg-brand-mid/30 text-brand-light px-2 py-0.5 rounded">Serviços</span>
+                <span className="text-xs bg-brand-mid/30 text-brand-light px-2 py-0.5 rounded border border-brand-mid/50">Servicio</span>
               )}
             </div>
           </button>
@@ -111,17 +110,17 @@ export function DealerMap({ dealers }: DealerMapProps) {
 
       {/* ─── Mapa ────────────────────────────────────────────────── */}
       <div className="lg:col-span-2 flex flex-col gap-4">
-        <div className="h-96 lg:h-[500px] rounded-xl overflow-hidden border border-brand-mid/20">
+        <div className="h-96 lg:h-[500px] rounded-xl overflow-hidden border border-brand-mid/20 relative z-0">
           {MapComponents ? (
             <MapComponents.MapContainer
               center={center}
-              zoom={5}
+              zoom={6}
               className="h-full w-full"
-              style={{ background: '#1A1A1A' }}
+              style={{ background: '#0a0a0a' }}
             >
               <MapComponents.TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; OpenStreetMap contributors'
+                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
               />
               {dealers.map((dealer) => (
                 <MapComponents.Marker
