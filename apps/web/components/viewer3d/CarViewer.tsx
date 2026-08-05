@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState, useRef } from 'react'
+import { Suspense, useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useGLTF, Environment, ContactShadows, Html } from '@react-three/drei'
 import { RotateCcw, Palette } from 'lucide-react'
@@ -26,21 +26,17 @@ function PlaceholderCar({ color }: { color: string }) {
     }
   })
 
-  const mat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(color),
-    metalness: 0.7,
-    roughness: 0.3,
-  })
-
   return (
     <group ref={groupRef} position={[0, -0.5, 0]}>
       {/* Carroceria principal */}
-      <mesh position={[0, 0.5, 0]} material={mat}>
+      <mesh position={[0, 0.5, 0]}>
         <boxGeometry args={[3.5, 0.8, 1.8]} />
+        <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
       </mesh>
       {/* Cabine */}
-      <mesh position={[0, 1.1, 0.1]} material={mat}>
+      <mesh position={[0, 1.1, 0.1]}>
         <boxGeometry args={[2, 0.7, 1.6]} />
+        <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
       </mesh>
       {/* Para-choque dianteiro */}
       <mesh position={[1.9, 0.3, 0]} material={new THREE.MeshStandardMaterial({ color: '#222', metalness: 0.5, roughness: 0.5 })}>
@@ -69,12 +65,17 @@ function GLBModel({ url, color }: { url: string; color: string }) {
   const { scene } = useGLTF(url)
 
   // Aplica cor à carroceria
-  scene.traverse((child: any) => {
-    if (child.isMesh && child.name?.toLowerCase().includes('body')) {
-      child.material = child.material.clone()
-      child.material.color.set(color)
-    }
-  })
+  useEffect(() => {
+    scene.traverse((child: any) => {
+      if (child.isMesh && child.name?.toLowerCase().includes('body')) {
+        if (!child.userData.hasClonedMaterial) {
+          child.material = child.material.clone()
+          child.userData.hasClonedMaterial = true
+        }
+        child.material.color.set(color)
+      }
+    })
+  }, [scene, color])
 
   return <primitive object={scene} scale={1.5} position={[0, -0.5, 0]} />
 }
